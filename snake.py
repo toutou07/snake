@@ -19,7 +19,7 @@ fpsClock = pygame.time.Clock()
 
 
 #create the play surface
-playSurface = pygame.display.set_mode((640,480))
+playSurface = pygame.display.set_mode((640,410))
 
 #and caption it
 pygame.display.set_caption("Snake")
@@ -31,9 +31,9 @@ whiteColor = pygame.Color(255,255,255)
 grayColor = pygame.Color(150,150,150)
 
 #define constants
-EASY_FPS = 10
-MED_FPS = 15
-HARD_FPS = 20
+EASY_FPS = 15
+MED_FPS = 20
+HARD_FPS = 25
 
 #init global variables
 fps = EASY_FPS #the speed at which the game runs
@@ -206,7 +206,7 @@ while True:
     #handle game over scenarios
     if snakePosition[0] > 620 or snakePosition[0] < 0: #out of bounds
         gameOver() #call the game over routine
-    if snakePosition[1] > 620 or snakePosition[1] < 0: #out of bounds
+    if snakePosition[1] > 390 or snakePosition[1] < 0: #out of bounds
         gameOver() #call the game over routine
     for snakeBody in snakeSegments[1:]:
         #if the snake has collided with itself
