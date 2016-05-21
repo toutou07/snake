@@ -30,7 +30,13 @@ blackColor = pygame.Color(0,0,0)
 whiteColor = pygame.Color(255,255,255)
 grayColor = pygame.Color(150,150,150)
 
+#define constants
+EASY_FPS = 10
+MED_FPS = 15
+HARD_FPS = 20
+
 #init global variables
+fps = EASY_FPS #the speed at which the game runs
 snakePosition = [100,100] #where the snake's head starts
 snakeSegments = [[100,100],[80,100],[60,100]] #where the snake's body starts
 foodPosition = [300,300] #where the snake food starts
@@ -56,6 +62,72 @@ def gameOver():
     pygame.quit()
     #and exit Python
     sys.exit()
+
+#displayTitle function - displays title text
+def displayTitle():
+    #fill the screen with black
+    playSurface.fill(blackColor)
+    #this font is used for the title
+    titleFont = pygame.font.Font('freesansbold.ttf', 72)
+    #now we render the font
+    titleSurf = titleFont.render('Snake', True, grayColor)
+    #get a space to display the text
+    titleRect = titleSurf.get_rect()
+    titleRect.midtop = (320, 10)
+    #display the text
+    playSurface.blit(titleSurf, titleRect)
+    pygame.display.flip()
+
+#this function selects a game mode 
+def selectGameMode():
+    displayTitle() #display the title
+    #this font is used for the difficulty choices
+    choiceFont = pygame.font.Font('freesansbold.ttf',32)
+    #now we prepare four renderings, one per menu choice
+    quitSurf = choiceFont.render('Quit', True, redColor)
+    easySurf = choiceFont.render('Easy', True, redColor)
+    medSurf = choiceFont.render('Medium', True, redColor)
+    hardSurf = choiceFont.render('Hard', True, redColor)
+    #then we display the renderings
+    quitRect = quitSurf.get_rect()
+    easyRect = easySurf.get_rect()
+    medRect = medSurf.get_rect()
+    hardRect = hardSurf.get_rect()
+    quitRect.midtop = (320,300)
+    easyRect.midtop = (120,200)
+    medRect.midtop = (320,200)
+    hardRect.midtop = (520,200)
+    playSurface.blit(quitSurf, quitRect)
+    playSurface.blit(easySurf, easyRect)
+    playSurface.blit(medSurf, medRect)
+    playSurface.blit(hardSurf, hardRect)
+    pygame.display.flip()
+    while True:
+        #then we detect button presses
+        for event in pygame.event.get():
+            if event.type == QUIT: #if the user quits the game
+                #quit pygame
+                pygame.quit()
+                #and exit Python
+                sys.exit()
+            elif event.type == MOUSEBUTTONDOWN: #if the mouse was clicked
+                if quitRect.collidepoint(pygame.mouse.get_pos()): #quit
+                    #quit pygame
+                    pygame.quit()
+                    #and exit Python
+                    sys.exit()
+                elif easyRect.collidepoint(pygame.mouse.get_pos()): #easy mode
+                    fps = EASY_FPS #set the fps variable
+                    return #and exit the function
+                elif medRect.collidepoint(pygame.mouse.get_pos()): #medium mode
+                    fps = MED_FPS #set the fps variable
+                    return #and exit the function
+                elif hardRect.collidepoint(pygame.mouse.get_pos()): #hard mode
+                    fps = HARD_FPS #set the fps variable
+                    return #and exit the function
+                    
+#select the game mode
+selectGameMode()
 
 #main loop of the game
 while True:
@@ -141,6 +213,6 @@ while True:
         if snakePosition[0] == snakeBody[0] and snakePosition[1] == snakeBody[1]:
             gameOver() #call the game over routine
     #set the game timer
-    fpsClock.tick(10)
+    fpsClock.tick(fps)
        
             
