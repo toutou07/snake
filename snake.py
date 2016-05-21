@@ -26,6 +26,7 @@ pygame.display.set_caption("Snake")
 
 #set the colors
 redColor = pygame.Color(255,0,0)
+greenColor = pygame.Color(0,255,0)
 blackColor = pygame.Color(0,0,0)
 whiteColor = pygame.Color(255,255,255)
 grayColor = pygame.Color(150,150,150)
@@ -36,6 +37,7 @@ MED_FPS = 20
 HARD_FPS = 25
 
 #init global variables
+score = 0 #the player's score
 fps = EASY_FPS #the speed at which the game runs
 snakePosition = [100,100] #where the snake's head starts
 snakeSegments = [[100,100],[80,100],[60,100]] #where the snake's body starts
@@ -125,6 +127,20 @@ def selectGameMode():
                 elif hardRect.collidepoint(pygame.mouse.get_pos()): #hard mode
                     fps = HARD_FPS #set the fps variable
                     return #and exit the function
+
+#this function displays the player's score in the top left-hand corner
+#of the screen
+def displayScore():
+    #this font is used to display the score of the player
+    scoreFont = pygame.font.Font('freesansbold.ttf',18)
+    #now we turn the score into a string
+    scoreStr = 'Score: ' + str(score)
+    #now we render the score string
+    scoreSurf = scoreFont.render(scoreStr, True, greenColor)
+    #now we display it
+    scoreRect = scoreSurf.get_rect()
+    scoreRect.midtop = (45,10)
+    playSurface.blit(scoreSurf, scoreRect)
                     
 #select the game mode
 selectGameMode()
@@ -181,6 +197,7 @@ while True:
     #check if food has been eaten
     if snakePosition[0] == foodPosition[0] and snakePosition[1] == foodPosition[1]:
         foodSpawned = 0 #make the food not there
+        score += 100 #add 100 points to the scoreboard
     else:
         snakeSegments.pop() #remove the last segment from the snake
 
@@ -200,6 +217,8 @@ while True:
         pygame.draw.rect(playSurface,whiteColor,Rect(position[0], position[1], 20,20))
     #draw the food
     pygame.draw.rect(playSurface, redColor, Rect(foodPosition[0], foodPosition[1], 20,20))
+    #now we display the score
+    displayScore()
     #refresh the display
     pygame.display.flip()
 
