@@ -206,7 +206,7 @@ while True:
     if foodSpawned == 0:
         #place the food at random coordinates
         x = random.randrange(1,32) #new x-coord of the food
-        y = random.randrange(1,24) #new y-coord of the food
+        y = random.randrange(1,20) #new y-coord of the food
         foodPosition = [int(x * 20), int(y* 20)] #
     foodSpawned = 1 #spawn the food
 
