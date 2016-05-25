@@ -32,9 +32,9 @@ whiteColor = pygame.Color(255,255,255)
 grayColor = pygame.Color(150,150,150)
 
 #define constants
-EASY_FPS = 15
+EASY_FPS = 10
 MED_FPS = 20
-HARD_FPS = 25
+HARD_FPS = 30
 
 #init global variables
 score = 0 #the player's score
@@ -119,14 +119,11 @@ def selectGameMode():
                     #and exit Python
                     sys.exit()
                 elif easyRect.collidepoint(pygame.mouse.get_pos()): #easy mode
-                    fps = EASY_FPS #set the fps variable
-                    return #and exit the function
+                    return EASY_FPS #return fps variable
                 elif medRect.collidepoint(pygame.mouse.get_pos()): #medium mode
-                    fps = MED_FPS #set the fps variable
-                    return #and exit the function
+                    return MED_FPS #return fps variable
                 elif hardRect.collidepoint(pygame.mouse.get_pos()): #hard mode
-                    fps = HARD_FPS #set the fps variable
-                    return #and exit the function
+                    return HARD_FPS #return fps variable
 
 #this function displays the player's score in the top left-hand corner
 #of the screen
@@ -143,7 +140,7 @@ def displayScore():
     playSurface.blit(scoreSurf, scoreRect)
                     
 #select the game mode
-selectGameMode()
+fps = selectGameMode()
 
 #main loop of the game
 while True:
